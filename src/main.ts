@@ -28,6 +28,10 @@ const earth = new THREE.Mesh(
   new THREE.SphereGeometry(2, 32, 16),
   new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
 );
+// Correct rotation order
+earth.rotation.reorder("ZYX");
+// Rotate by 25 degrees by Z axis
+earth.rotateZ((25 * Math.PI) / 180); // Rotate by 25 degrees
 scene.add(earth);
 camera.lookAt(earth.position);
 
@@ -57,6 +61,9 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+
+  // Earth rotation animation
+  earth.rotation.y = (elapsedTime * Math.PI) / 24;
 
   // Render
   renderer.render(scene, camera);
