@@ -2,6 +2,16 @@ import "./style.css";
 
 import * as THREE from "three";
 
+import GUI from "lil-gui";
+
+// Debug
+const gui = new GUI({
+  width: 400,
+});
+const debugObject: Record<string, string | number | Function> = {
+  rotationSpeed: 24,
+};
+
 // ! Textures
 const textureLoader = new THREE.TextureLoader();
 
@@ -42,7 +52,7 @@ const earth = new THREE.Mesh(
 // Correct rotation order
 earth.rotation.reorder("ZYX");
 // Rotate by 25 degrees by Z axis
-earth.rotateZ((25 * Math.PI) / 180);
+earth.rotateZ((22 * Math.PI) / 180);
 scene.add(earth);
 camera.lookAt(earth.position);
 
@@ -81,7 +91,7 @@ const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
   // Earth rotation animation
-  earth.rotation.y = (elapsedTime * Math.PI) / 24;
+  earth.rotation.y = (elapsedTime * Math.PI) / +debugObject.rotationSpeed;
 
   // Render
   renderer.render(scene, camera);
@@ -91,3 +101,34 @@ const tick = () => {
 };
 
 tick();
+
+gui
+  .add(earth.material, "roughness")
+  .min(0)
+  .max(1)
+  .step(0.0001)
+  .name("Roughness of Earth");
+gui
+  .add(earth.material, "metalness")
+  .min(0)
+  .max(1)
+  .step(0.0001)
+  .name("Metalness of Earth");
+gui
+  .add(ambientLight, "intensity")
+  .min(0)
+  .max(1)
+  .step(0.0001)
+  .name("Ambient Light Intensity");
+gui
+  .add(sunLight, "intensity")
+  .min(0)
+  .max(10)
+  .step(0.01)
+  .name("sunLight Light Intensity");
+gui
+  .add(debugObject, "rotationSpeed")
+  .min(0)
+  .max(100)
+  .step(1)
+  .name("Rotation Speed of Earth (less is faster)");
