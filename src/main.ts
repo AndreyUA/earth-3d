@@ -2,6 +2,13 @@ import "./style.css";
 
 import * as THREE from "three";
 
+// ! Textures
+const textureLoader = new THREE.TextureLoader();
+
+const albedoTexture = textureLoader.load("/Albedo.jpg");
+albedoTexture.colorSpace = THREE.SRGBColorSpace;
+const oceanTexture = textureLoader.load("/Ocean.jpg");
+
 const sizes = {
   width: window.innerWidth,
   height: window.innerHeight,
@@ -26,7 +33,11 @@ scene.add(camera);
 // Earth sphere
 const earth = new THREE.Mesh(
   new THREE.SphereGeometry(2, 32, 16),
-  new THREE.MeshStandardMaterial({ color: 0x0000ff })
+  new THREE.MeshStandardMaterial({
+    map: albedoTexture,
+    roughnessMap: oceanTexture,
+    metalnessMap: oceanTexture,
+  })
 );
 // Correct rotation order
 earth.rotation.reorder("ZYX");
@@ -36,7 +47,7 @@ scene.add(earth);
 camera.lookAt(earth.position);
 
 // ! Lights
-const ambientLight = new THREE.AmbientLight("#FFFFFF", 1);
+const ambientLight = new THREE.AmbientLight("#FFFFFF", 0.3);
 const sunLight = new THREE.DirectionalLight("#b9d5ff", 10);
 sunLight.position.set(-10, 0, 0);
 
