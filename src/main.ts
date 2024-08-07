@@ -26,14 +26,21 @@ scene.add(camera);
 // Earth sphere
 const earth = new THREE.Mesh(
   new THREE.SphereGeometry(2, 32, 16),
-  new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+  new THREE.MeshStandardMaterial({ color: 0x0000ff })
 );
 // Correct rotation order
 earth.rotation.reorder("ZYX");
 // Rotate by 25 degrees by Z axis
-earth.rotateZ((25 * Math.PI) / 180); // Rotate by 25 degrees
+earth.rotateZ((25 * Math.PI) / 180);
 scene.add(earth);
 camera.lookAt(earth.position);
+
+// ! Lights
+const ambientLight = new THREE.AmbientLight("#FFFFFF", 1);
+const sunLight = new THREE.DirectionalLight("#b9d5ff", 10);
+sunLight.position.set(-10, 0, 0);
+
+scene.add(ambientLight, sunLight);
 
 // ! Renderer
 const renderer = new THREE.WebGLRenderer({
