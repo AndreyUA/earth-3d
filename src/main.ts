@@ -15,7 +15,7 @@ const debugObject: Record<string, string | number | Function> = {
 // ! Textures
 const textureLoader = new THREE.TextureLoader();
 
-const albedoTexture = textureLoader.load("/Albedo.jpg");
+const albedoTexture = textureLoader.load("/earth.jpg");
 albedoTexture.colorSpace = THREE.SRGBColorSpace;
 
 const sizes = {
@@ -99,18 +99,6 @@ const tick = () => {
 
 tick();
 
-gui
-  .add(earth.material, "roughness")
-  .min(0)
-  .max(1)
-  .step(0.0001)
-  .name("Roughness of Earth");
-gui
-  .add(earth.material, "metalness")
-  .min(0)
-  .max(1)
-  .step(0.0001)
-  .name("Metalness of Earth");
 gui
   .add(ambientLight, "intensity")
   .min(0)
