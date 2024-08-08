@@ -1,6 +1,7 @@
 import "./style.css";
 
 import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 import GUI from "lil-gui";
 
@@ -106,6 +107,10 @@ window.addEventListener("resize", () => {
 // ! Animation
 const clock = new THREE.Clock();
 
+// ! Controls
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.update();
+
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
@@ -121,6 +126,9 @@ const tick = () => {
 
   // Render
   renderer.render(scene, camera);
+
+  // Update controls
+  controls.update();
 
   // Call tick again on the next frame
   window.requestAnimationFrame(tick);
@@ -158,6 +166,3 @@ gui
   .max(100)
   .step(1)
   .name("Changing position of Moon (less is slower)");
-
-// TODO: add shadows from Earth to the Moon
-// TODO: add controls for camera
