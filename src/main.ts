@@ -150,3 +150,6 @@ gui
   .max(100)
   .step(1)
   .name("Changing position of Moon (less is slower)");
+
+// TODO: add shadows from Earth to the Moon
+// TODO: add controls for camera
