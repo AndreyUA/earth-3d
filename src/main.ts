@@ -56,6 +56,7 @@ earth.rotation.reorder("ZYX");
 earth.rotateZ((22 * Math.PI) / 180);
 scene.add(earth);
 camera.lookAt(earth.position);
+earth.castShadow = true;
 
 // Moon sphere
 const moon = new THREE.Mesh(
@@ -66,6 +67,7 @@ const moon = new THREE.Mesh(
 );
 moon.position.set(4, 0, 0);
 scene.add(moon);
+moon.receiveShadow = true;
 
 // ! Lights
 const ambientLight = new THREE.AmbientLight("#FFFFFF", 0.3);
@@ -73,6 +75,10 @@ const sunLight = new THREE.DirectionalLight("#b9d5ff", 10);
 sunLight.position.set(-10, 0, 0);
 
 scene.add(ambientLight, sunLight);
+sunLight.castShadow = true;
+sunLight.shadow.mapSize.width = 256;
+sunLight.shadow.mapSize.height = 256;
+sunLight.shadow.camera.far = 20;
 
 // ! Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -80,6 +86,8 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 window.addEventListener("resize", () => {
   // Update sizes
