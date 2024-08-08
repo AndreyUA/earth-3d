@@ -17,7 +17,6 @@ const textureLoader = new THREE.TextureLoader();
 
 const albedoTexture = textureLoader.load("/Albedo.jpg");
 albedoTexture.colorSpace = THREE.SRGBColorSpace;
-const oceanTexture = textureLoader.load("/Ocean.jpg");
 
 const sizes = {
   width: window.innerWidth,
@@ -37,16 +36,14 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-camera.position.set(0, 5, 5);
+camera.position.set(0, 4, 4);
 scene.add(camera);
 
 // Earth sphere
 const earth = new THREE.Mesh(
   new THREE.SphereGeometry(2, 32, 16),
-  new THREE.MeshStandardMaterial({
+  new THREE.MeshPhongMaterial({
     map: albedoTexture,
-    roughnessMap: oceanTexture,
-    metalnessMap: oceanTexture,
   })
 );
 // Correct rotation order
